@@ -7,12 +7,20 @@ const Product = require("./models/Product");
 const Character = require("./models/Character");
 const User = require("./models/User");
 const { auth, adminAuth } = require("./middleware/auth");
+const RateLimit = require('express-rate-limit');
 
 const app = express();
+
+// Rate limiter: maximum of 100 requests per 15 minutes
+const limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(limiter);
 
 // MongoDB Connection
 mongoose
