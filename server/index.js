@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
@@ -9,6 +10,7 @@ const User = require('./models/User');
 const { auth, adminAuth, ageVerification } = require('./middleware/auth');
 
 const app = express();
+
 
 // Middleware
 app.use(cors());
