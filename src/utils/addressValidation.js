@@ -1,7 +1,6 @@
-import tokenManager from "./tokenManager";
-import config from "../config/env";
 import API_BASE_URL from "../services/api";
-// import { validateAddress as validateAddressAPI } from '../services/api';
+import config from "../config/env";
+import tokenManager from "./tokenManager";
 
 // Country data
 export const COUNTRIES = [{ code: "US", name: "United States" }];
@@ -151,7 +150,7 @@ export const sanitizeAddress = (address) => {
 export const validatePostalCode = async (postalCode, country) => {
   try {
     if (!postalCode || !country) {
-      console.error('Missing required parameters for postal code validation');
+      console.error("Missing required parameters for postal code validation");
       return false;
     }
 
@@ -161,7 +160,7 @@ export const validatePostalCode = async (postalCode, country) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Postal code validation server error:', errorText);
+      console.error("Postal code validation server error:", errorText);
       return false;
     }
 

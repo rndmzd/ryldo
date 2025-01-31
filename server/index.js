@@ -397,13 +397,15 @@ app.get("/api/validate/postal-code/:postalCode", async (req, res) => {
     const { postalCode } = req.params;
     const { country } = req.query;
 
-    console.log(`Validating postal code: ${postalCode} for country: ${country}`);
+    console.log(
+      `Validating postal code: ${postalCode} for country: ${country}`,
+    );
 
     if (!postalCode || !country) {
-      console.log('Missing required parameters');
-      return res.status(400).json({ 
+      console.log("Missing required parameters");
+      return res.status(400).json({
         isValid: false,
-        message: "Postal code and country are required" 
+        message: "Postal code and country are required",
       });
     }
 
@@ -420,9 +422,9 @@ app.get("/api/validate/postal-code/:postalCode", async (req, res) => {
     }
   } catch (error) {
     console.error("Postal code validation error:", error);
-    res.status(500).json({ 
+    res.status(500).json({
       isValid: false,
-      message: "Error validating postal code" 
+      message: "Error validating postal code",
     });
   }
 });

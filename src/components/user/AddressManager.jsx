@@ -95,8 +95,10 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
 
     try {
       // Get country code for validation
-      const countryCode = COUNTRIES.find((c) => c.name === formData.country)?.code;
-      
+      const countryCode = COUNTRIES.find(
+        (c) => c.name === formData.country,
+      )?.code;
+
       // Validate address
       const validation = await validateAddress(formData, countryCode);
       if (!validation.isValid) {
