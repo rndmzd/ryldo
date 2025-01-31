@@ -338,11 +338,14 @@ ProductCard.propTypes = {
         inStock: PropTypes.bool.isRequired,
       }),
     ),
-    character: PropTypes.shape({
-      image: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    }),
+    character: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+      }),
+    ]),
   }).isRequired,
   onAddToCart: PropTypes.func.isRequired,
 };
