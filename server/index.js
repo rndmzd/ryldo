@@ -7,7 +7,7 @@ const Product = require("./models/Product");
 const Character = require("./models/Character");
 const User = require("./models/User");
 const { auth, adminAuth } = require("./middleware/auth");
-const RateLimit = require('express-rate-limit');
+const RateLimit = require("express-rate-limit");
 
 const app = express();
 
