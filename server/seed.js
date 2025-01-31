@@ -1,38 +1,35 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const Product = require('./models/Product');
-const Character = require('./models/Character');
+require("dotenv").config();
+const mongoose = require("mongoose");
+const Product = require("./models/Product");
+const Character = require("./models/Character");
 
-const { CHARACTERS, products } = require('../src/data/products');
+const { CHARACTERS, products } = require("../src/data/products");
 
 async function seedDatabase() {
-    try {
-        // Connect to MongoDB
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log('Connected to MongoDB');
+  try {
+    // Connect to MongoDB
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("Connected to MongoDB");
 
-        // Clear existing data
-        await Promise.all([
-            Product.deleteMany({}),
-            Character.deleteMany({})
-        ]);
-        console.log('Cleared existing data');
+    // Clear existing data
+    await Promise.all([Product.deleteMany({}), Character.deleteMany({})]);
+    console.log("Cleared existing data");
 
-        // Insert characters
-        const characters = Object.values(CHARACTERS);
-        await Character.insertMany(characters);
-        console.log('Inserted characters');
+    // Insert characters
+    const characters = Object.values(CHARACTERS);
+    await Character.insertMany(characters);
+    console.log("Inserted characters");
 
-        // Insert products
-        await Product.insertMany(products);
-        console.log('Inserted products');
+    // Insert products
+    await Product.insertMany(products);
+    console.log("Inserted products");
 
-        console.log('Database seeded successfully');
-        process.exit(0);
-    } catch (error) {
-        console.error('Error seeding database:', error);
-        process.exit(1);
-    }
+    console.log("Database seeded successfully");
+    process.exit(0);
+  } catch (error) {
+    console.error("Error seeding database:", error);
+    process.exit(1);
+  }
 }
 
-seedDatabase(); 
+seedDatabase();
