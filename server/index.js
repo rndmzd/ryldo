@@ -1,49 +1,50 @@
-require('dotenv').config();
-const express = require('express');
-const rateLimit = require('express-rate-limit');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const Product = require('./models/Product');
-const Character = require('./models/Character');
-const User = require('./models/User');
-const { auth, adminAuth } = require('./middleware/auth');
+require("dotenv").config();
+const express = require("express");
+const rateLimit = require("express-rate-limit");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const Product = require("./models/Product");
+const Character = require("./models/Character");
+const User = require("./models/User");
+const { auth, adminAuth } = require("./middleware/auth");
 
 const app = express();
 
 // Rate Limiting Configuration
 const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // 5 requests per windowMs for auth routes
-    message: 'Too many authentication attempts, please try again after 15 minutes',
-    standardHeaders: true,
-    legacyHeaders: false,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 requests per windowMs for auth routes
+  message:
+    "Too many authentication attempts, please try again after 15 minutes",
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 const apiLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
-    max: 30, // 30 requests per minute for general API routes
-    message: 'Too many requests, please try again later',
-    standardHeaders: true,
-    legacyHeaders: false,
+  windowMs: 60 * 1000, // 1 minute
+  max: 30, // 30 requests per minute for general API routes
+  message: "Too many requests, please try again later",
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 const publicRoutesLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
-    max: 60, // 60 requests per minute for public routes
-    message: 'Too many requests, please try again later',
-    standardHeaders: true,
-    legacyHeaders: false,
+  windowMs: 60 * 1000, // 1 minute
+  max: 60, // 60 requests per minute for public routes
+  message: "Too many requests, please try again later",
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 // Apply rate limiting to specific routes
-app.use('/api/auth/login', authLimiter);
-app.use('/api/auth/register', authLimiter);
-app.use('/api/auth/check', authLimiter);
-app.use('/api/user', apiLimiter);
-app.use('/api/admin', apiLimiter);
-app.use('/api/products', publicRoutesLimiter);
-app.use('/api/characters', publicRoutesLimiter);
+app.use("/api/auth/login", authLimiter);
+app.use("/api/auth/register", authLimiter);
+app.use("/api/auth/check", authLimiter);
+app.use("/api/user", apiLimiter);
+app.use("/api/admin", apiLimiter);
+app.use("/api/products", publicRoutesLimiter);
+app.use("/api/characters", publicRoutesLimiter);
 
 // Middleware
 app.use(cors());

@@ -14,7 +14,7 @@ import {
   getPostalCodePlaceholder,
   COUNTRIES,
 } from "../../utils/addressValidation";
-import { cn } from "../../utils/cn";
+import { cn } from "../../lib/utils";
 
 const AddressManager = ({ addresses, onAddressUpdate }) => {
   const [isAdding, setIsAdding] = useState(false);

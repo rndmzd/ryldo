@@ -1,8 +1,6 @@
 import tokenManager from "./tokenManager";
 import config from "../config/env";
 // import { validateAddress as validateAddressAPI } from '../services/api';
-import tokenManager from './tokenManager';
-import config from '../config/env';
 
 // Country data
 export const COUNTRIES = [{ code: "US", name: "United States" }];
@@ -162,11 +160,11 @@ export const validatePostalCode = async (postalCode, country) => {
   }
 };
 
-export const validateCity = (city, countryCode) => {
-    // Enhanced city validation with international support
-    // Allow letters, spaces, hyphens, apostrophes, and periods
-    const cityRegex = /^[a-zA-Z\s\-.']{2,}$/i;
-    const isValid = cityRegex.test(city);
+export const validateCity = (city) => {
+  // Enhanced city validation with international support
+  // Allow letters, spaces, hyphens, apostrophes, and periods
+  const cityRegex = /^[a-zA-Z\s\-.']{2,}$/i;
+  const isValid = cityRegex.test(city);
 
   return {
     isValid,
