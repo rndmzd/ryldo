@@ -25,13 +25,16 @@
     "url": "^0.11.4",
     "vm-browserify": "^1.1.2",
     "web-vitals": "^3.5.2",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "dompurify": "^3.2.4"
   },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .js,.jsx",
+    "lint:fix": "eslint . --ext .js,.jsx --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -56,9 +59,15 @@
     "@craco/craco": "^7.1.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
     "https-browserify": "^1.0.0",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
+    "prettier": "^3.4.2",
     "process": "^0.11.10",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",

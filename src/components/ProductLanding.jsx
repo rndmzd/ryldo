@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -6,10 +6,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card"
-import { Button } from "./ui/button"
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert"
-import { Plus, Minus, X } from 'lucide-react';
+} from "./ui/card";
+import { Button } from "./ui/button";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { Plus, Minus, X } from "lucide-react";
+import PropTypes from "prop-types";
 
 const CartItem = ({ item, onUpdateQuantity, onRemove }) => (
   <div className="flex items-center py-4">
@@ -20,7 +21,12 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => (
     />
     <div className="ml-4 flex-1">
       <h3 className="font-medium text-blue-900">{item.name}</h3>
-      <p className="text-sm text-blue-600">${item.price.toFixed(2)}</p>
+      <div className="flex items-center">
+        <span className="text-sm text-gray-500">Price:</span>
+        <span className="ml-2 text-sm font-medium text-gray-900">
+          ${item.price.toFixed(2)}
+        </span>
+      </div>
       <div className="mt-2 flex items-center">
         <Button
           variant="outline"
@@ -53,6 +59,18 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => (
   </div>
 );
 
+CartItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+  }).isRequired,
+  onUpdateQuantity: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+};
+
 const ProductLanding = ({ cartItems, setCartItems }) => {
   const [showNotification, setShowNotification] = useState(false);
 
@@ -62,16 +80,18 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
       name: "Limited Edition Streamer Merch",
       price: 29.99,
       quantity: 1,
-      image: "/api/placeholder/800/450"
+      image: "/api/placeholder/800/450",
     };
 
-    const existingItem = cartItems.find(item => item.name === newItem.name);
+    const existingItem = cartItems.find((item) => item.name === newItem.name);
     if (existingItem) {
-      setCartItems(cartItems.map(item =>
-        item.id === existingItem.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ));
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === existingItem.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        ),
+      );
     } else {
       setCartItems([...cartItems, newItem]);
     }
@@ -89,13 +109,17 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
             Featured Product
           </h1>
           <p className="mt-3 max-w-md mx-auto text-base text-blue-600 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Your go-to streaming merchandise store. Get the latest gear from your favorite streamer!
+            Your go-to streaming merchandise store. Get the latest gear from
+            your favorite streamer!
           </p>
         </div>
       </div>
 
       {/* Featured Product */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="featured">
+      <div
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+        id="featured"
+      >
         <Card className="max-w-2xl mx-auto">
           <CardHeader>
             <CardTitle>Limited Edition Streamer Merch</CardTitle>
@@ -111,16 +135,19 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
             </div>
             <div className="space-y-4">
               <p className="text-lg">
-                Show your support with our signature merchandise, designed for true fans.
+                Show your support with our signature merchandise, designed for
+                true fans.
               </p>
-              <p className="text-3xl font-bold">$29.99</p>
+              <div className="flex items-center">
+                <span className="text-sm text-gray-500">Price:</span>
+                <span className="ml-2 text-sm font-medium text-gray-900">
+                  $29.99
+                </span>
+              </div>
             </div>
           </CardContent>
           <CardFooter>
-            <Button
-              className="w-full"
-              onClick={handleAddToCart}
-            >
+            <Button className="w-full" onClick={handleAddToCart}>
               Add to Cart
             </Button>
           </CardFooter>
@@ -131,9 +158,12 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
       <div className="bg-white py-12" id="about">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-blue-900">About the Stream</h2>
+            <h2 className="text-3xl font-extrabold text-blue-900">
+              About the Stream
+            </h2>
             <p className="mt-4 text-lg text-blue-600">
-              Join our community of passionate viewers and get access to exclusive merchandise.
+              Join our community of passionate viewers and get access to
+              exclusive merchandise.
             </p>
           </div>
         </div>
@@ -143,9 +173,13 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
       <div className="bg-blue-50 py-12" id="stream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-blue-900">Live Stream Schedule</h2>
+            <h2 className="text-3xl font-extrabold text-blue-900">
+              Live Stream Schedule
+            </h2>
+            ,
             <p className="mt-4 text-lg text-blue-600">
-              Catch us live and be the first to know about new merchandise drops!
+              Catch us live and be the first to know about new merchandise
+              drops!
             </p>
           </div>
         </div>
@@ -165,9 +199,7 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
         <div className="fixed bottom-4 right-4">
           <Alert>
             <AlertTitle>Success!</AlertTitle>
-            <AlertDescription>
-              Item added to cart
-            </AlertDescription>
+            <AlertDescription>Item added to cart</AlertDescription>
           </Alert>
         </div>
       )}
@@ -175,4 +207,17 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
   );
 };
 
-export default ProductLanding; 
+ProductLanding.propTypes = {
+  cartItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      quantity: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+  setCartItems: PropTypes.func.isRequired,
+};
+
+export default ProductLanding;
