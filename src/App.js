@@ -18,19 +18,19 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    console.log('App component mounted');
-    const nav = document.getElementById('navigation-bar');
-    console.log('Navigation element:', nav);
+    console.log("App component mounted");
+    const nav = document.getElementById("navigation-bar");
+    console.log("Navigation element:", nav);
   }, []);
 
-  console.log('App component rendering');
+  console.log("App component rendering");
 
   return (
     <AuthProvider>
       <Router>
-        <div style={{ minHeight: '100vh' }}>
+        <div style={{ minHeight: "100vh" }}>
           <Navigation />
-          <div style={{ paddingTop: '60px' }}>
+          <div style={{ paddingTop: "60px" }}>
             <AgeVerification />
             <Routes>
               <Route 
@@ -43,8 +43,14 @@ function App() {
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/profile" element={<UserProfile />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password/:token" element={<ResetPassword />} />
-              <Route path="/verify-email/:token" element={<EmailVerification />} />
+              <Route
+                path="/reset-password/:token"
+                element={<ResetPassword />}
+              />
+              <Route
+                path="/verify-email/:token"
+                element={<EmailVerification />}
+              />
               <Route path="/verify-email" element={<EmailVerification />} />
             </Routes>
           </div>
