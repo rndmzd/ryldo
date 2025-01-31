@@ -7,10 +7,43 @@ const jwt = require('jsonwebtoken');
 const Product = require('./models/Product');
 const Character = require('./models/Character');
 const User = require('./models/User');
-const { auth, adminAuth, ageVerification } = require('./middleware/auth');
+const { auth, adminAuth } = require('./middleware/auth');
 
 const app = express();
 
+// Rate Limiting Configuration
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5, // 5 requests per windowMs for auth routes
+    message: 'Too many authentication attempts, please try again after 15 minutes',
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+const apiLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 30, // 30 requests per minute for general API routes
+    message: 'Too many requests, please try again later',
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+const publicRoutesLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 60, // 60 requests per minute for public routes
+    message: 'Too many requests, please try again later',
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+// Apply rate limiting to specific routes
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
+app.use('/api/auth/check', authLimiter);
+app.use('/api/user', apiLimiter);
+app.use('/api/admin', apiLimiter);
+app.use('/api/products', publicRoutesLimiter);
+app.use('/api/characters', publicRoutesLimiter);
 
 // Middleware
 app.use(cors());
@@ -83,20 +116,155 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // User Profile Route
-app.get('/api/user/profile', auth, async (req, res) => {
-    try {
-        console.log('Profile request received with user:', req.user?._id);
-        const user = await User.findById(req.user._id).select('-password');
-        console.log('Found user:', user?._id);
-        if (!user) {
-            console.log('User not found in database');
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.json(user);
-    } catch (error) {
-        console.error('Profile error:', error);
-        res.status(500).json({ message: error.message });
+app.get("/api/user/profile", auth, async (req, res) => {
+  try {
+    console.log("Profile request received with user:", req.user?._id);
+    const user = await User.findById(req.user._id).select("-password");
+    console.log("Found user:", user?._id);
+    if (!user) {
+      console.log("User not found in database");
+      return res.status(404).json({ message: "User not found" });
     }
+    res.json(user);
+  } catch (error) {
+    console.error("Profile error:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Update User Profile Route
+app.patch("/api/user/profile", auth, async (req, res) => {
+  try {
+    const allowedUpdates = [
+      "firstName",
+      "lastName",
+      "email",
+      "addresses",
+      "phoneNumber",
+    ];
+    const updates = Object.keys(req.body)
+      .filter((key) => allowedUpdates.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = req.body[key];
+        return obj;
+      }, {});
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Apply updates
+    Object.assign(user, updates);
+    await user.save();
+
+    // Return updated user without password
+    const updatedUser = await User.findById(user._id).select("-password");
+    res.json(updatedUser);
+  } catch (error) {
+    console.error("Profile update error:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Add new address
+app.post("/api/user/addresses", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // If this is the first address or isDefault is true, set it as default
+    if (user.addresses.length === 0 || req.body.isDefault) {
+      user.addresses.forEach((addr) => (addr.isDefault = false));
+    }
+
+    user.addresses.push(req.body);
+    await user.save();
+
+    res.status(201).json(user.addresses[user.addresses.length - 1]);
+  } catch (error) {
+    console.error("Add address error:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Update address
+app.patch("/api/user/addresses/:addressId", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const address = user.addresses.id(req.params.addressId);
+    if (!address) {
+      return res.status(404).json({ message: "Address not found" });
+    }
+
+    // If setting this address as default, unset others
+    if (req.body.isDefault) {
+      user.addresses.forEach((addr) => (addr.isDefault = false));
+    }
+
+    Object.assign(address, req.body);
+    await user.save();
+
+    res.json(address);
+  } catch (error) {
+    console.error("Update address error:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Delete address
+app.delete("/api/user/addresses/:addressId", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const address = user.addresses.id(req.params.addressId);
+    if (!address) {
+      return res.status(404).json({ message: "Address not found" });
+    }
+
+    address.remove();
+    await user.save();
+
+    res.status(200).json({ message: "Address deleted successfully" });
+  } catch (error) {
+    console.error("Delete address error:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Set default address
+app.patch("/api/user/addresses/:addressId/default", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const address = user.addresses.id(req.params.addressId);
+    if (!address) {
+      return res.status(404).json({ message: "Address not found" });
+    }
+
+    // Set all addresses to non-default
+    user.addresses.forEach((addr) => (addr.isDefault = false));
+    // Set the selected address as default
+    address.isDefault = true;
+
+    await user.save();
+    res.json(address);
+  } catch (error) {
+    console.error("Set default address error:", error);
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // Add auth check endpoint

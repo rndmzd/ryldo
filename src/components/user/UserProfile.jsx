@@ -35,20 +35,25 @@ const UserProfile = () => {
         }));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsSaving(true);
-        try {
-            const updatedProfile = await updateUserProfile(editData);
-            setProfile(updatedProfile);
-            setIsEditing(false);
-            setError(null);
-        } catch (err) {
-            setError('Failed to update profile');
-        } finally {
-            setIsSaving(false);
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSaving(true);
+    try {
+      const dataToUpdate = {
+        ...editData,
+        phoneNumber: editData.phoneNumber || "",
+      };
+      const updatedProfile = await updateUserProfile(dataToUpdate);
+      setProfile(updatedProfile);
+      setIsEditing(false);
+      setError(null);
+    } catch (err) {
+      setError("Failed to update profile");
+      console.error("Profile update error:", err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
     if (isLoading) {
         return (
