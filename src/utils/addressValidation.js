@@ -160,7 +160,7 @@ export const validatePostalCode = async (postalCode, country) => {
   }
 };
 
-export const validateCity = (city) => {
+export const validateCity = (city, _countryCode) => {
   // Enhanced city validation with international support
   // Allow letters, spaces, hyphens, apostrophes, and periods
   const cityRegex = /^[a-zA-Z\s\-.']{2,}$/i;

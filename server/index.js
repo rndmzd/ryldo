@@ -391,6 +391,28 @@ app.patch("/api/admin/products/:id", adminAuth, async (req, res) => {
   }
 });
 
+// Postal Code Validation Route
+app.get("/api/validate/postal-code/:postalCode", async (req, res) => {
+  try {
+    const { postalCode } = req.params;
+    const { country } = req.query;
+
+    // US ZIP code validation (5 digits or 5+4 format)
+    if (country === "US") {
+      const zipRegex = /^\d{5}(-?\d{4})?$/;
+      const isValid = zipRegex.test(postalCode);
+      res.json({ isValid });
+    } else {
+      // For other countries, return true for now
+      // TODO: Add validation for other countries
+      res.json({ isValid: true });
+    }
+  } catch (error) {
+    console.error("Postal code validation error:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
