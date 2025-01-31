@@ -397,19 +397,33 @@ app.get("/api/validate/postal-code/:postalCode", async (req, res) => {
     const { postalCode } = req.params;
     const { country } = req.query;
 
+    console.log(`Validating postal code: ${postalCode} for country: ${country}`);
+
+    if (!postalCode || !country) {
+      console.log('Missing required parameters');
+      return res.status(400).json({ 
+        isValid: false,
+        message: "Postal code and country are required" 
+      });
+    }
+
     // US ZIP code validation (5 digits or 5+4 format)
     if (country === "US") {
       const zipRegex = /^\d{5}(-?\d{4})?$/;
       const isValid = zipRegex.test(postalCode);
-      res.json({ isValid });
+      console.log(`US ZIP validation result: ${isValid}`);
+      return res.json({ isValid });
     } else {
+      console.log(`Validation for country ${country} not implemented`);
       // For other countries, return true for now
-      // TODO: Add validation for other countries
-      res.json({ isValid: true });
+      return res.json({ isValid: true });
     }
   } catch (error) {
     console.error("Postal code validation error:", error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ 
+      isValid: false,
+      message: "Error validating postal code" 
+    });
   }
 });
 

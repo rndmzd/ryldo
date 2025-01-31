@@ -1,5 +1,6 @@
 import tokenManager from "./tokenManager";
 import config from "../config/env";
+import API_BASE_URL from "../services/api";
 // import { validateAddress as validateAddressAPI } from '../services/api';
 
 // Country data
@@ -149,9 +150,21 @@ export const sanitizeAddress = (address) => {
 // Update functions to use the response data
 export const validatePostalCode = async (postalCode, country) => {
   try {
+    if (!postalCode || !country) {
+      console.error('Missing required parameters for postal code validation');
+      return false;
+    }
+
     const response = await fetch(
-      `/api/validate/postal-code/${postalCode}?country=${country}`,
+      `${API_BASE_URL}/validate/postal-code/${encodeURIComponent(postalCode)}?country=${encodeURIComponent(country)}`,
     );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Postal code validation server error:', errorText);
+      return false;
+    }
+
     const result = await response.json();
     return result.isValid;
   } catch (error) {
