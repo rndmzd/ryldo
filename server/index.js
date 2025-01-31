@@ -34,7 +34,7 @@ app.post("/api/auth/register", async (req, res) => {
     const { email, password, firstName, lastName, dateOfBirth } = req.body;
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email: { $eq: email } });
     if (existingUser) {
       return res.status(400).json({
         message: "A user with this email already exists",
