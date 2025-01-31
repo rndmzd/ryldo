@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
   Dialog,
   DialogContent,
@@ -6,25 +7,26 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog"
-import { Button } from "./ui/button"
-import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
+} from "./ui/dialog";
+import { Button } from "./ui/button";
+import { ChevronLeft, ChevronRight, Eye } from "lucide-react";
+import { cn } from "../lib/utils";
 
 const QuickLook = ({ product }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
   // Combine main image with additional images
   const allImages = [product.image, ...(product.additionalImages || [])];
-  
+
   const nextImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === allImages.length - 1 ? 0 : prev + 1
+    setCurrentImageIndex((prev) =>
+      prev === allImages.length - 1 ? 0 : prev + 1,
     );
   };
 
   const previousImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === 0 ? allImages.length - 1 : prev - 1
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? allImages.length - 1 : prev - 1,
     );
   };
 
@@ -77,9 +79,12 @@ const QuickLook = ({ product }) => {
                 {allImages.map((_, index) => (
                   <button
                     key={index}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      currentImageIndex === index ? 'bg-blue-600' : 'bg-gray-300 hover:bg-gray-400'
-                    }`}
+                    className={cn(
+                      "w-2 h-2 rounded-full transition-colors",
+                      currentImageIndex === index
+                        ? "bg-blue-600"
+                        : "bg-gray-300 hover:bg-gray-400",
+                    )}
                     onClick={() => setCurrentImageIndex(index)}
                   />
                 ))}
@@ -108,7 +113,12 @@ const QuickLook = ({ product }) => {
                 <p className="text-gray-600">{product.character}</p>
               </div>
             )}
-            <Button className="w-full" onClick={() => {}}>
+            <Button
+              className="w-full"
+              onClick={() => {
+                // TODO: Implement add to cart functionality
+              }}
+            >
               Add to Cart
             </Button>
           </div>
@@ -118,4 +128,20 @@ const QuickLook = ({ product }) => {
   );
 };
 
-export default QuickLook; 
+QuickLook.propTypes = {
+  product: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    additionalImages: PropTypes.arrayOf(PropTypes.string),
+    category: PropTypes.string.isRequired,
+    character: PropTypes.shape({
+      image: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+};
+
+export default QuickLook;
