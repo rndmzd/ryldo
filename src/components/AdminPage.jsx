@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Eye, EyeOff, Plus, Edit, X } from "lucide-react";
 import { Button } from "./ui/button";
+import DOMPurify from "dompurify";
 import {
   getAllProducts,
   updateProductVisibility,
@@ -92,7 +93,7 @@ const ImageManager = ({ product, onUpdate }) => {
 
   const handleUrlChange = (e) => {
     const path = e.target.value;
-    setNewImageUrl(path);
+    setNewImageUrl(DOMPurify.sanitize(path));
     if (path && !validateUrl(path)) {
       setError(
         "Image path must start with / for relative paths, or http:// or https:// for URLs",
