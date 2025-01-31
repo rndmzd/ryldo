@@ -48,7 +48,6 @@ app.use('/api/characters', publicRoutesLimiter);
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(limiter);
 
 // MongoDB Connection
 mongoose
