@@ -39,12 +39,17 @@ const UserProfile = () => {
     e.preventDefault();
     setIsSaving(true);
     try {
-      const updatedProfile = await updateUserProfile(editData);
+      const dataToUpdate = {
+        ...editData,
+        phoneNumber: editData.phoneNumber || "",
+      };
+      const updatedProfile = await updateUserProfile(dataToUpdate);
       setProfile(updatedProfile);
       setIsEditing(false);
       setError(null);
     } catch (err) {
       setError("Failed to update profile");
+      console.error("Profile update error:", err);
     } finally {
       setIsSaving(false);
     }

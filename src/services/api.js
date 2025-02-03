@@ -1,5 +1,7 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
+export default API_BASE_URL;
+
 let authToken = localStorage.getItem("authToken");
 
 // Helper function to validate image paths/URLs
