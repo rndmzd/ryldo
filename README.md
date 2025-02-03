@@ -16,6 +16,7 @@ A modern full-stack e-commerce application built with React and Node.js, featuri
 ## Tech Stack
 
 ### Frontend
+
 - React.js
 - React Router DOM
 - Tailwind CSS
@@ -23,6 +24,7 @@ A modern full-stack e-commerce application built with React and Node.js, featuri
 - Axios for API calls
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB with Mongoose
@@ -32,6 +34,7 @@ A modern full-stack e-commerce application built with React and Node.js, featuri
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - Node.js (v14 or higher)
 - npm or yarn
 - MongoDB
@@ -39,12 +42,14 @@ Before you begin, ensure you have the following installed:
 ## Getting Started
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/ryldo.git
    cd ryldo
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
@@ -54,6 +59,7 @@ Before you begin, ensure you have the following installed:
    - Fill in the required environment variables
 
 4. Start the development server:
+
    ```bash
    npm start
    ```

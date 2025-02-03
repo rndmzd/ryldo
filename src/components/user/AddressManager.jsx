@@ -14,7 +14,7 @@ import {
   getPostalCodePlaceholder,
   COUNTRIES,
 } from "../../utils/addressValidation";
-import { cn } from "../../utils/cn";
+import { cn } from "../../lib/utils";
 
 const AddressManager = ({ addresses, onAddressUpdate }) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -94,8 +94,13 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
     setValidationErrors({});
 
     try {
+      // Get country code for validation
+      const countryCode = COUNTRIES.find(
+        (c) => c.name === formData.country,
+      )?.code;
+
       // Validate address
-      const validation = await validateAddress(formData);
+      const validation = await validateAddress(formData, countryCode);
       if (!validation.isValid) {
         setValidationErrors(validation.errors);
         setIsSubmitting(false);
