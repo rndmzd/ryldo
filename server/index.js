@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const Product = require("./models/Product");
 const Character = require("./models/Character");
 const User = require("./models/User");
+const NewsletterSubscriber = require("./models/NewsletterSubscriber");
 const { auth, adminAuth } = require("./middleware/auth");
 
 const app = express();
@@ -426,6 +427,35 @@ app.get("/api/validate/postal-code/:postalCode", async (req, res) => {
       isValid: false,
       message: "Error validating postal code",
     });
+  }
+});
+
+// Newsletter Signup Route
+app.post("/api/newsletter/subscribe", publicRoutesLimiter, async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Validate email
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ message: "Invalid email address" });
+    }
+
+    // Check if already subscribed
+    const existing = await NewsletterSubscriber.findOne({
+      email: { $eq: email },
+    });
+    if (existing) {
+      return res.status(400).json({ message: "Email already subscribed" });
+    }
+
+    // Create new subscriber
+    const subscriber = new NewsletterSubscriber({ email });
+    await subscriber.save();
+
+    res.status(201).json({ message: "Successfully subscribed to newsletter" });
+  } catch (error) {
+    console.error("Newsletter subscription error:", error);
+    res.status(500).json({ message: "Failed to subscribe to newsletter" });
   }
 });
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Navigation from "./components/Navigation";
+import UnderConstruction from "./components/UnderConstruction";
 import ProductLanding from "./components/ProductLanding";
 import ProductsPage from "./components/ProductsPage";
 import AdminPage from "./components/AdminPage";
@@ -29,31 +30,9 @@ function App() {
     <AuthProvider>
       <Router>
         <div style={{ minHeight: "100vh" }}>
-          <Navigation />
-          <div style={{ paddingTop: "60px" }}>
-            <AgeVerification />
-            <Routes>
-              <Route 
-                path="/" 
-                element={<ProductLanding cartItems={cartItems} setCartItems={setCartItems} />} 
-              />
-              <Route path="/shop" element={<ProductsPage />} />
-              <Route path="/admin" element={<AdminPage />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/profile" element={<UserProfile />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route
-                path="/reset-password/:token"
-                element={<ResetPassword />}
-              />
-              <Route
-                path="/verify-email/:token"
-                element={<EmailVerification />}
-              />
-              <Route path="/verify-email" element={<EmailVerification />} />
-            </Routes>
-          </div>
+          <Routes>
+            <Route path="/*" element={<UnderConstruction />} />
+          </Routes>
         </div>
       </Router>
     </AuthProvider>
