@@ -5,6 +5,8 @@
       "@/*": [
         "src/*"
       ]
-    }
+    },
+    "skipLibCheck": true,
+    "types": []
   }
 }
