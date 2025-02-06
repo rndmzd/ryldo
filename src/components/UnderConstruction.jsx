@@ -50,8 +50,8 @@ const UnderConstruction = () => {
           {/* Text with combined animations */}
           <h1 className="relative font-walter text-6xl md:text-8xl py-6 animate-float">
             <span className="relative inline-block text-sky-200 animate-glow [text-shadow:2px_2px_2px_rgba(0,0,0,0.5)]">
-              Ryldo
-              <span className="text-cyan-300">.com</span>
+              Ry&apos;s Circus
+              <span className="text-cyan-300"> Merch Shop</span>
             </span>
           </h1>
         </div>
