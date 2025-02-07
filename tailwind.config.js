@@ -8,6 +8,13 @@ module.exports = {
         dancing: ["Dancing Script", "cursive"],
         walter: ["Walter Turncoat", "cursive"],
       },
+      colors: {
+        circus: {
+          red: "#FF1744",
+          yellow: "#FFD700",
+          blue: "#1E88E5",
+        },
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },
@@ -22,24 +29,24 @@ module.exports = {
           "100%": { opacity: 1, transform: "translateY(0)" },
         },
         float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
+          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+          "50%": { transform: "translateY(-10px) rotate(2deg)" },
         },
         glow: {
           "0%, 100%": {
             textShadow:
-              "0 0 15px rgba(56,189,248,0.4), 0 0 30px rgba(56,189,248,0.2)",
+              "0 0 15px rgba(255,23,68,0.4), 0 0 30px rgba(255,23,68,0.2)",
             transform: "scale(1)",
           },
           "50%": {
             textShadow:
-              "0 0 25px rgba(56,189,248,0.6), 0 0 50px rgba(56,189,248,0.3)",
+              "0 0 25px rgba(255,23,68,0.6), 0 0 50px rgba(255,23,68,0.3)",
             transform: "scale(1.02)",
           },
         },
-        shimmer: {
-          "0%": { backgroundPosition: "100% 0" },
-          "100%": { backgroundPosition: "-100% 0" },
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
         },
       },
       animation: {
@@ -48,7 +55,7 @@ module.exports = {
         "fade-in": "fade-in 1.5s ease",
         float: "float 3s ease-in-out infinite",
         glow: "glow 3s ease-in-out infinite",
-        shimmer: "shimmer 12s linear infinite",
+        "spin-slow": "spin-slow 20s linear infinite",
       },
     },
   },
