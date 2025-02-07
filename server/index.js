@@ -48,7 +48,25 @@ app.use("/api/products", publicRoutesLimiter);
 app.use("/api/characters", publicRoutesLimiter);
 
 // Middleware
-app.use(cors());
+const allowedOrigins = ["https://shop.ryscircus.com", "https://ryldo.com"];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 // MongoDB Connection
