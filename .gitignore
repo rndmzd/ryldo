@@ -33,6 +33,7 @@ public/images/**/*.ico
 public/images/**/*.bmp
 public/images/**/*.tiff
 public/images/**/*.ico
+public/images/**/*.xcf
 
 # Environment files
 .env
