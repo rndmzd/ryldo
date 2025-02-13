@@ -1,7 +1,7 @@
-const globals = require("globals");
-const reactPlugin = require("eslint-plugin-react");
-const reactHooksPlugin = require("eslint-plugin-react-hooks");
-const prettierPlugin = require("eslint-plugin-prettier");
+import globals from "globals";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
+import prettier from "eslint-plugin-prettier";
 
 // Filter out any globals with whitespace
 const filterGlobals = (obj) => {
@@ -11,15 +11,11 @@ const filterGlobals = (obj) => {
   );
 };
 
-module.exports = [
+export default [
   {
     files: ["src/**/*.{js,jsx}"],
     ignores: ["**/*.test.js", "**/*.spec.js"],
-    plugins: {
-      react: reactPlugin,
-      "react-hooks": reactHooksPlugin,
-      prettier: prettierPlugin,
-    },
+    plugins: { react, "react-hooks": reactHooks, prettier },
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
@@ -45,7 +41,7 @@ module.exports = [
   },
   {
     files: ["**/*.test.js", "**/*.spec.js"],
-    plugins: { react: reactPlugin },
+    plugins: { react },
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
