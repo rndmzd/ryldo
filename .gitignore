@@ -44,3 +44,5 @@ public/images/**/*.xcf
 # Logs
 logs/
 *.log
+
+.vscode/
