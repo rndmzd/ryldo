@@ -55,6 +55,7 @@ Before you begin, ensure you have the following installed:
    ```
 
 3. Set up environment variables:
+
    - Copy `.env.example` to `.env`
    - Fill in the required environment variables
 
