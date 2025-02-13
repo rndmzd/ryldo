@@ -1,6 +1,6 @@
-import API_BASE_URL from "../services/api";
-import config from "../config/env";
-import tokenManager from "./tokenManager";
+import API_BASE_URL from "../services/api.js";
+import config from "../config/env.js";
+import tokenManager from "./tokenManager.js";
 
 // Country data
 export const COUNTRIES = [{ code: "US", name: "United States" }];
@@ -178,10 +178,7 @@ export const validateCity = (city, _countryCode) => {
   const cityRegex = /^[a-zA-Z\s\-.']{2,}$/i;
   const isValid = cityRegex.test(city);
 
-  return {
-    isValid,
-    error: isValid ? null : "Please enter a valid city name",
-  };
+  return { isValid, error: isValid ? null : "Please enter a valid city name" };
 };
 
 export const formatPostalCode = (postalCode, _countryCode) => {
@@ -284,19 +281,12 @@ const processUSPSResponse = async (response) => {
     switch (response.status) {
       case 400:
         console.warn("Address validation error:", errorData.error.message);
-        return {
-          isValid: false,
-          errors: {
-            general: errorData.error.message,
-          },
-        };
+        return { isValid: false, errors: { general: errorData.error.message } };
       case 404:
         console.warn("Address not found:", errorData.error.message);
         return {
           isValid: false,
-          errors: {
-            general: "Address could not be found or verified",
-          },
+          errors: { general: "Address could not be found or verified" },
         };
       case 429:
         console.warn(
@@ -390,8 +380,5 @@ export const validateAddress = async (address, countryCode) => {
     }
   }
 
-  return {
-    isValid: Object.keys(errors).length === 0,
-    errors,
-  };
+  return { isValid: Object.keys(errors).length === 0, errors };
 };

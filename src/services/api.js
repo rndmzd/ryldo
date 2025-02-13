@@ -4,6 +4,18 @@ export default API_BASE_URL;
 
 let authToken = localStorage.getItem("authToken");
 
+// Default fetch options for all requests
+const defaultOptions = {
+  credentials: "include",
+  headers: { "Content-Type": "application/json" },
+};
+
+// Helper function to get auth headers
+const getAuthHeaders = () => ({
+  ...defaultOptions.headers,
+  Authorization: authToken ? `Bearer ${authToken}` : "",
+});
+
 // Helper function to validate image paths/URLs
 const isValidImagePath = (path) => {
   if (!path) return false;
@@ -20,10 +32,8 @@ const isValidImagePath = (path) => {
 
 export const register = async (userData) => {
   const response = await fetch(`${API_BASE_URL}/auth/register`, {
+    ...defaultOptions,
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify(userData),
   });
 
@@ -40,9 +50,8 @@ export const register = async (userData) => {
 
   // Get the user profile using the new token
   const profileResponse = await fetch(`${API_BASE_URL}/user/profile`, {
-    headers: {
-      Authorization: `Bearer ${data.token}`,
-    },
+    ...defaultOptions,
+    headers: getAuthHeaders(),
   });
 
   if (!profileResponse.ok) {
@@ -55,9 +64,7 @@ export const register = async (userData) => {
 export const login = async (email, password) => {
   const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
   if (!response.ok) {
@@ -115,9 +122,7 @@ export const getAllProducts = async () => {
     throw new Error("Not authenticated");
   }
   const response = await fetch(`${API_BASE_URL}/admin/products`, {
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
+    headers: { Authorization: `Bearer ${authToken}` },
   });
   if (!response.ok) {
     throw new Error("Failed to fetch all products");
@@ -220,9 +225,8 @@ export const getUserProfile = async () => {
   if (!authToken) throw new Error("Not authenticated");
 
   const response = await fetch(`${API_BASE_URL}/user/profile`, {
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
+    ...defaultOptions,
+    headers: getAuthHeaders(),
   });
   if (!response.ok) {
     throw new Error("Failed to fetch user profile");
@@ -234,11 +238,9 @@ export const updateUserProfile = async (profileData) => {
   if (!authToken) throw new Error("Not authenticated");
 
   const response = await fetch(`${API_BASE_URL}/user/profile`, {
+    ...defaultOptions,
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${authToken}`,
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify(profileData),
   });
   if (!response.ok) {
@@ -252,11 +254,8 @@ export const addAddress = async (addressData) => {
   if (!authToken) throw new Error("Not authenticated");
 
   const response = await fetch(`${API_BASE_URL}/user/addresses`, {
+    ...defaultOptions,
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${authToken}`,
-    },
     body: JSON.stringify(addressData),
   });
   if (!response.ok) {
@@ -269,11 +268,8 @@ export const updateAddress = async (addressId, addressData) => {
   if (!authToken) throw new Error("Not authenticated");
 
   const response = await fetch(`${API_BASE_URL}/user/addresses/${addressId}`, {
+    ...defaultOptions,
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${authToken}`,
-    },
     body: JSON.stringify(addressData),
   });
   if (!response.ok) {
@@ -286,10 +282,8 @@ export const deleteAddress = async (addressId) => {
   if (!authToken) throw new Error("Not authenticated");
 
   const response = await fetch(`${API_BASE_URL}/user/addresses/${addressId}`, {
+    ...defaultOptions,
     method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
   });
   if (!response.ok) {
     throw new Error("Failed to delete address");
@@ -302,12 +296,7 @@ export const setDefaultAddress = async (addressId) => {
 
   const response = await fetch(
     `${API_BASE_URL}/user/addresses/${addressId}/default`,
-    {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    },
+    { ...defaultOptions, method: "PATCH" },
   );
   if (!response.ok) {
     throw new Error("Failed to set default address");
@@ -318,10 +307,8 @@ export const setDefaultAddress = async (addressId) => {
 // Password Reset
 export const requestPasswordReset = async (email) => {
   const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
+    ...defaultOptions,
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({ email }),
   });
   if (!response.ok) {
@@ -332,10 +319,8 @@ export const requestPasswordReset = async (email) => {
 
 export const resetPassword = async (token, newPassword) => {
   const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
+    ...defaultOptions,
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({ token, newPassword }),
   });
   if (!response.ok) {
@@ -347,6 +332,7 @@ export const resetPassword = async (token, newPassword) => {
 // Email Verification
 export const verifyEmail = async (token) => {
   const response = await fetch(`${API_BASE_URL}/auth/verify-email/${token}`, {
+    ...defaultOptions,
     method: "GET",
   });
   if (!response.ok) {
@@ -359,10 +345,8 @@ export const resendVerificationEmail = async () => {
   if (!authToken) throw new Error("Not authenticated");
 
   const response = await fetch(`${API_BASE_URL}/auth/resend-verification`, {
+    ...defaultOptions,
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
   });
   if (!response.ok) {
     throw new Error("Failed to resend verification email");
