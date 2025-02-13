@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
-import Navigation from "./components/Navigation";
-import ProductLanding from "./components/ProductLanding";
-import ProductsPage from "./components/ProductsPage";
-import AdminPage from "./components/AdminPage";
-import AgeVerification from "./components/AgeVerification";
-import RegisterForm from "./components/auth/RegisterForm";
-import LoginForm from "./components/auth/LoginForm";
-import UserProfile from "./components/user/UserProfile";
-import ForgotPassword from "./components/auth/ForgotPassword";
-import ResetPassword from "./components/auth/ResetPassword";
-import EmailVerification from "./components/auth/EmailVerification";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import Navigation from "./components/Navigation.jsx";
+import ProductLanding from "./components/ProductLanding.jsx";
+import ProductsPage from "./components/ProductsPage.jsx";
+import AdminPage from "./components/AdminPage.jsx";
+import AgeVerification from "./components/AgeVerification.jsx";
+import RegisterForm from "./components/auth/RegisterForm.jsx";
+import LoginForm from "./components/auth/LoginForm.jsx";
+import UserProfile from "./components/user/UserProfile.jsx";
+import ForgotPassword from "./components/auth/ForgotPassword.jsx";
+import ResetPassword from "./components/auth/ResetPassword.jsx";
+import EmailVerification from "./components/auth/EmailVerification.jsx";
 import "./App.css";
 
 function App() {
@@ -33,9 +33,14 @@ function App() {
           <div style={{ paddingTop: "60px" }}>
             <AgeVerification />
             <Routes>
-              <Route 
-                path="/" 
-                element={<ProductLanding cartItems={cartItems} setCartItems={setCartItems} />} 
+              <Route
+                path="/"
+                element={
+                  <ProductLanding
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                  />
+                }
               />
               <Route path="/shop" element={<ProductsPage />} />
               <Route path="/admin" element={<AdminPage />} />

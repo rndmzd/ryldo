@@ -85,88 +85,88 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AddressResponse'
+                $ref: "#/components/schemas/AddressResponse"
             application/xml:
               schema:
-                $ref: '#/components/schemas/AddressResponse'
+                $ref: "#/components/schemas/AddressResponse"
         "400":
           description: There is an error in the received request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
               examples:
                 Invalid State Code:
-                  $ref: '#/components/examples/Invalid-State-Code'
+                  $ref: "#/components/examples/Invalid-State-Code"
                 Invalid City:
-                  $ref: '#/components/examples/Invalid-City'
+                  $ref: "#/components/examples/Invalid-City"
                 Unverifiable City and State:
-                  $ref: '#/components/examples/Unverifiable-City-and-State'
+                  $ref: "#/components/examples/Unverifiable-City-and-State"
                 Insufficient Address Data:
-                  $ref: '#/components/examples/Insufficient-Adddress-Data'
+                  $ref: "#/components/examples/Insufficient-Adddress-Data"
                 Invalid Delivery Address:
-                  $ref: '#/components/examples/Invalid-Delivery-Address'
+                  $ref: "#/components/examples/Invalid-Delivery-Address"
                 Multiple Addresses Found:
-                  $ref: '#/components/examples/Multiple-Addresses-Found'
+                  $ref: "#/components/examples/Multiple-Addresses-Found"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "401":
           description: Unauthorized request.
           headers:
             WWW-Authenticate:
-              $ref: '#/components/headers/WWWAuthenticate'
+              $ref: "#/components/headers/WWWAuthenticate"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "403":
           description: Access is denied.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "404":
           description: Address Not Found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
               examples:
                 Address Not Found:
-                  $ref: '#/components/examples/Address-Not-Found'
+                  $ref: "#/components/examples/Address-Not-Found"
                 No Match:
-                  $ref: '#/components/examples/No-Match'
+                  $ref: "#/components/examples/No-Match"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "429":
           description: Too Many Requests. Too many requests have been received from client in a short amount of time.
           headers:
             Retry-After:
-              $ref: '#/components/headers/RetryAfter'
+              $ref: "#/components/headers/RetryAfter"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "503":
           description: Service is unavailable.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         default:
           description: Other unanticipated errors that may occur.
           content: {}
@@ -194,61 +194,61 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CityStateResponse'
+                $ref: "#/components/schemas/CityStateResponse"
             application/xml:
               schema:
-                $ref: '#/components/schemas/CityStateResponse'
+                $ref: "#/components/schemas/CityStateResponse"
         "400":
           description: A bad request was received.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "401":
           description: Unauthorized request.
           headers:
             WWW-Authenticate:
-              $ref: '#/components/headers/WWWAuthenticate'
+              $ref: "#/components/headers/WWWAuthenticate"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "403":
           description: Access is denied.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "429":
           description: Too Many Requests. Too many requests have been received from client in a short amount of time.
           headers:
             Retry-After:
-              $ref: '#/components/headers/RetryAfter'
+              $ref: "#/components/headers/RetryAfter"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "503":
           description: Service unavailable
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         default:
           description: Other unanticipated errors that may occur.
           content: {}
@@ -317,61 +317,61 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ZIPCodeResponse'
+                $ref: "#/components/schemas/ZIPCodeResponse"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ZIPCodeResponse'
+                $ref: "#/components/schemas/ZIPCodeResponse"
         "400":
           description: There is an error in the received request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "401":
           description: Unauthorized request.
           headers:
             WWW-Authenticate:
-              $ref: '#/components/headers/WWWAuthenticate'
+              $ref: "#/components/headers/WWWAuthenticate"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "403":
           description: Access is denied.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "429":
           description: Too Many Requests. Too many requests have been received from client in a short amount of time.
           headers:
             Retry-After:
-              $ref: '#/components/headers/RetryAfter'
+              $ref: "#/components/headers/RetryAfter"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         "503":
           description: Service is unavailable.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ErrorMessage'
+                $ref: "#/components/schemas/ErrorMessage"
         default:
           description: Other unanticipated errors that may occur.
           content: {}
@@ -390,13 +390,13 @@ components:
           type: string
           description: This is the business or firm name at the address.
         address:
-          $ref: '#/components/schemas/DomesticAddress'
+          $ref: "#/components/schemas/DomesticAddress"
         additionalInfo:
-          $ref: '#/components/schemas/AddressAdditionalInfo'
+          $ref: "#/components/schemas/AddressAdditionalInfo"
         corrections:
-          $ref: '#/components/schemas/AddressCorrections'
+          $ref: "#/components/schemas/AddressCorrections"
         matches:
-          $ref: '#/components/schemas/AddressMatches'
+          $ref: "#/components/schemas/AddressMatches"
         warnings:
           type: array
           xml:
@@ -544,7 +544,7 @@ components:
         name: CityStateLookupResponse
         wrapped: true
       allOf:
-        - $ref: '#/components/schemas/CityAndState'
+        - $ref: "#/components/schemas/CityAndState"
     ZIPCodeResponse:
       title: ZIP Code&#8482; Response
       type: object
@@ -555,7 +555,7 @@ components:
           type: string
           description: The sender's business name.
         address:
-          $ref: '#/components/schemas/DomesticAddress'
+          $ref: "#/components/schemas/DomesticAddress"
       additionalProperties: false
       description: The address to validate the ZIP Code&#8482; for.
       xml:
@@ -615,7 +615,7 @@ components:
       additionalProperties: true
       description: Address fields for US locations
       allOf:
-        - $ref: '#/components/schemas/Address'
+        - $ref: "#/components/schemas/Address"
         - type: object
           properties:
             city:
@@ -624,7 +624,7 @@ components:
               type: string
               description: This is the city name of the address.
             state:
-              $ref: '#/components/schemas/State'
+              $ref: "#/components/schemas/State"
             ZIPCode:
               pattern: "\\d{5}"
               type: string
@@ -821,7 +821,7 @@ components:
       required: false
       schema:
         type: string
-        example: "WWW-Authenticate: Bearer realm=\"https://api.usps.com\""
+        example: 'WWW-Authenticate: Bearer realm="https://api.usps.com"'
     RetryAfter:
       description: Indicate to the client application a time after which they can retry a resource request.
       required: false
