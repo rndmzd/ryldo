@@ -12,7 +12,7 @@ const filterGlobals = (obj) => {
   );
 };
 
-export default [
+module.exports = [
   {
     files: ["src/**/*.{js,jsx}"],
     ignores: ["**/*.test.js", "**/*.spec.js"],
