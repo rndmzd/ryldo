@@ -20,10 +20,10 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => (
       className="h-20 w-20 rounded object-cover"
     />
     <div className="ml-4 flex-1">
-      <h3 className="font-medium text-blue-900">{item.name}</h3>
+      <h3 className="font-medium text-blue-900 dark:text-blue-100">{item.name}</h3>
       <div className="flex items-center">
-        <span className="text-sm text-gray-500">Price:</span>
-        <span className="ml-2 text-sm font-medium text-gray-900">
+        <span className="text-sm text-gray-500 dark:text-gray-400">Price:</span>
+        <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
           ${item.price.toFixed(2)}
         </span>
       </div>
@@ -31,17 +31,17 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => (
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8"
+          className="h-8 w-8 dark:border-gray-600 dark:text-gray-200"
           onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
           disabled={item.quantity <= 1}
         >
           <Minus className="h-4 w-4" />
         </Button>
-        <span className="mx-3">{item.quantity}</span>
+        <span className="mx-3 dark:text-gray-200">{item.quantity}</span>
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8"
+          className="h-8 w-8 dark:border-gray-600 dark:text-gray-200"
           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
         >
           <Plus className="h-4 w-4" />
@@ -51,7 +51,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => (
     <Button
       variant="ghost"
       size="icon"
-      className="ml-4"
+      className="ml-4 dark:text-gray-200 dark:hover:text-white"
       onClick={() => onRemove(item.id)}
     >
       <X className="h-4 w-4" />
@@ -101,14 +101,14 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
   };
 
   return (
-    <div className="mt-16 bg-blue-50">
+    <div className="mt-16 bg-blue-50 dark:bg-gray-900">
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">
-          <h1 className="text-4xl tracking-tight font-extrabold text-blue-900 sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl tracking-tight font-extrabold text-blue-900 dark:text-blue-100 sm:text-5xl md:text-6xl">
             Featured Product
           </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-blue-600 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+          <p className="mt-3 max-w-md mx-auto text-base text-blue-600 dark:text-blue-400 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
             Your go-to streaming merchandise store. Get the latest gear from
             your favorite streamer!
           </p>
@@ -120,10 +120,10 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
         id="featured"
       >
-        <Card className="max-w-2xl mx-auto">
+        <Card className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
-            <CardTitle>Limited Edition Streamer Merch</CardTitle>
-            <CardDescription>Exclusive design, premium quality</CardDescription>
+            <CardTitle className="text-gray-900 dark:text-white">Limited Edition Streamer Merch</CardTitle>
+            <CardDescription className="text-gray-600 dark:text-gray-300">Exclusive design, premium quality</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="aspect-w-16 aspect-h-9 mb-4">
@@ -134,20 +134,20 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
               />
             </div>
             <div className="space-y-4">
-              <p className="text-lg">
+              <p className="text-lg text-gray-700 dark:text-gray-300">
                 Show your support with our signature merchandise, designed for
                 true fans.
               </p>
               <div className="flex items-center">
-                <span className="text-sm text-gray-500">Price:</span>
-                <span className="ml-2 text-sm font-medium text-gray-900">
+                <span className="text-sm text-gray-500 dark:text-gray-400">Price:</span>
+                <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   $29.99
                 </span>
               </div>
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" onClick={handleAddToCart}>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white" onClick={handleAddToCart}>
               Add to Cart
             </Button>
           </CardFooter>
@@ -155,13 +155,13 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
       </div>
 
       {/* About Section */}
-      <div className="bg-white py-12" id="about">
+      <div className="bg-white dark:bg-gray-800 py-12" id="about">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-blue-900">
+            <h2 className="text-3xl font-extrabold text-blue-900 dark:text-blue-100">
               About the Stream
             </h2>
-            <p className="mt-4 text-lg text-blue-600">
+            <p className="mt-4 text-lg text-blue-600 dark:text-blue-400">
               Join our community of passionate viewers and get access to
               exclusive merchandise.
             </p>
@@ -170,14 +170,13 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
       </div>
 
       {/* Stream Section */}
-      <div className="bg-blue-50 py-12" id="stream">
+      <div className="bg-blue-50 dark:bg-gray-900 py-12" id="stream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-blue-900">
+            <h2 className="text-3xl font-extrabold text-blue-900 dark:text-blue-100">
               Live Stream Schedule
             </h2>
-            ,
-            <p className="mt-4 text-lg text-blue-600">
+            <p className="mt-4 text-lg text-blue-600 dark:text-blue-400">
               Catch us live and be the first to know about new merchandise
               drops!
             </p>
@@ -186,9 +185,9 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white">
+      <footer className="bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-blue-600">
+          <p className="text-center text-blue-600 dark:text-blue-400">
             © 2025 StreamStore. All rights reserved.
           </p>
         </div>
@@ -197,9 +196,9 @@ const ProductLanding = ({ cartItems, setCartItems }) => {
       {/* Notification */}
       {showNotification && (
         <div className="fixed bottom-4 right-4">
-          <Alert>
-            <AlertTitle>Success!</AlertTitle>
-            <AlertDescription>Item added to cart</AlertDescription>
+          <Alert className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+            <AlertTitle className="text-gray-900 dark:text-white">Success!</AlertTitle>
+            <AlertDescription className="text-gray-600 dark:text-gray-300">Item added to cart</AlertDescription>
           </Alert>
         </div>
       )}
