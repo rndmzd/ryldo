@@ -1,3 +1,4 @@
+/* eslint-disable-next-line n/no-commonjs */
 const globals = require("globals");
 const reactPlugin = require("eslint-plugin-react");
 const reactHooksPlugin = require("eslint-plugin-react-hooks");
@@ -11,7 +12,7 @@ const filterGlobals = (obj) => {
   );
 };
 
-module.exports = [
+export default [
   {
     files: ["src/**/*.{js,jsx}"],
     ignores: ["**/*.test.js", "**/*.spec.js"],
