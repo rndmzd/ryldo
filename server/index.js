@@ -11,6 +11,19 @@ const { auth, adminAuth } = require("./middleware/auth");
 
 const app = express();
 
+// CORS Configuration
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? process.env.FRONTEND_URL
+        : "http://localhost:3000",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
 // Rate Limiting Configuration
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -47,7 +60,6 @@ app.use("/api/products", publicRoutesLimiter);
 app.use("/api/characters", publicRoutesLimiter);
 
 // Middleware
-app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
@@ -64,9 +76,9 @@ app.post("/api/auth/register", async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ email: { $eq: email } });
     if (existingUser) {
-      return res.status(400).json({
-        message: "A user with this email already exists",
-      });
+      return res
+        .status(400)
+        .json({ message: "A user with this email already exists" });
     }
 
     // Create new user
@@ -91,10 +103,7 @@ app.post("/api/auth/register", async (req, res) => {
 
     console.log("Token generated for user:", user._id);
 
-    res.status(201).json({
-      message: "User registered successfully",
-      token,
-    });
+    res.status(201).json({ message: "User registered successfully", token });
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ message: error.message });
@@ -145,13 +154,18 @@ app.patch("/api/user/profile", auth, async (req, res) => {
       "email",
       "addresses",
       "phoneNumber",
+      "dateOfBirth",
+      "timezone",
     ];
+
+    console.log("Received update data:", req.body);
     const updates = Object.keys(req.body)
       .filter((key) => allowedUpdates.includes(key))
       .reduce((obj, key) => {
         obj[key] = req.body[key];
         return obj;
       }, {});
+    console.log("Filtered updates:", updates);
 
     const user = await User.findById(req.user._id);
     if (!user) {
@@ -164,6 +178,7 @@ app.patch("/api/user/profile", auth, async (req, res) => {
 
     // Return updated user without password
     const updatedUser = await User.findById(user._id).select("-password");
+    console.log("Updated user:", updatedUser);
     res.json(updatedUser);
   } catch (error) {
     console.error("Profile update error:", error);
@@ -403,10 +418,12 @@ app.get("/api/validate/postal-code/:postalCode", async (req, res) => {
 
     if (!postalCode || !country) {
       console.log("Missing required parameters");
-      return res.status(400).json({
-        isValid: false,
-        message: "Postal code and country are required",
-      });
+      return res
+        .status(400)
+        .json({
+          isValid: false,
+          message: "Postal code and country are required",
+        });
     }
 
     // US ZIP code validation (5 digits or 5+4 format)
@@ -422,10 +439,9 @@ app.get("/api/validate/postal-code/:postalCode", async (req, res) => {
     }
   } catch (error) {
     console.error("Postal code validation error:", error);
-    res.status(500).json({
-      isValid: false,
-      message: "Error validating postal code",
-    });
+    res
+      .status(500)
+      .json({ isValid: false, message: "Error validating postal code" });
   }
 });
 

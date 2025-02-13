@@ -18,6 +18,7 @@ const RegisterForm = () => {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
       dateOfBirth: e.target.dateOfBirth.value,
+      phoneNumber: e.target.phoneNumber.value || undefined,
     };
 
     if (formData.password !== formData.confirmPassword) {
@@ -99,7 +100,7 @@ const RegisterForm = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
-                Email address
+                Email
               </label>
               <input
                 id="email"
@@ -107,7 +108,22 @@ const RegisterForm = () => {
                 type="email"
                 required
                 className="mt-1 appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
+                placeholder="Email"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="phoneNumber"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Phone Number (optional)
+              </label>
+              <input
+                id="phoneNumber"
+                name="phoneNumber"
+                type="tel"
+                className="mt-1 appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Phone Number"
               />
             </div>
             <div>

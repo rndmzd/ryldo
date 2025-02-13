@@ -170,23 +170,23 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
   return (
     <div className="space-y-6">
       {/* Address List */}
-      <div className="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul className="divide-y divide-gray-200">
+      <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
+        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {addresses.map((address) => (
             <li key={address._id} className="px-4 py-4 sm:px-6">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <div className="flex items-center">
-                    <h3 className="text-lg font-medium text-gray-900">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                       {address.street}
                     </h3>
                     {address.isDefault && (
-                      <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100">
                         Default
                       </span>
                     )}
                   </div>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                     {address.city}, {address.state} {address.zipCode}
                     <br />
                     {address.country}
@@ -196,20 +196,20 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                   {!address.isDefault && (
                     <button
                       onClick={() => handleSetDefault(address._id)}
-                      className="text-sm text-blue-600 hover:text-blue-900"
+                      className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300"
                     >
                       Set as Default
                     </button>
                   )}
                   <button
                     onClick={() => handleEdit(address)}
-                    className="text-sm text-gray-600 hover:text-gray-900"
+                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(address._id)}
-                    className="text-sm text-red-600 hover:text-red-900"
+                    className="text-sm text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
                   >
                     Delete
                   </button>
@@ -228,18 +228,18 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
               setIsAdding(true);
               resetForm();
             }}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Add New Address
           </button>
         ) : (
-          <div className="bg-white shadow sm:rounded-lg p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
+          <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
               {editingId ? "Edit Address" : "Add New Address"}
             </h3>
             {error && (
-              <div className="mb-4 rounded-md bg-red-50 p-4">
-                <p className="text-sm text-red-800">{error}</p>
+              <div className="mb-4 rounded-md bg-red-50 dark:bg-red-900/20 p-4">
+                <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
               </div>
             )}
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -247,7 +247,7 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
               <div>
                 <label
                   htmlFor="country"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Country
                 </label>
@@ -257,7 +257,7 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                   required
                   value={formData.country}
                   onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 >
                   {COUNTRIES.map((country) => (
                     <option key={country.code} value={country.name}>
@@ -271,7 +271,7 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
               <div>
                 <label
                   htmlFor="street"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Street Address
                 </label>
@@ -284,14 +284,14 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                   onChange={handleChange}
                   placeholder="123 Main St"
                   className={cn(
-                    "mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500",
+                    "mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
                     validationErrors.street
-                      ? "border-red-300"
-                      : "border-gray-300",
+                      ? "border-red-300 dark:border-red-500 text-red-900 dark:text-red-100 placeholder-red-300 dark:placeholder-red-500"
+                      : "border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
                   )}
                 />
                 {validationErrors.street && (
-                  <p className="mt-1 text-sm text-red-600">
+                  <p className="mt-2 text-sm text-red-600 dark:text-red-400">
                     {validationErrors.street}
                   </p>
                 )}
@@ -301,9 +301,9 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
               <div>
                 <label
                   htmlFor="unit"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  Apartment, suite, unit, etc. (optional)
+                  Unit/Apt (optional)
                 </label>
                 <input
                   type="text"
@@ -311,8 +311,7 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                   id="unit"
                   value={formData.unit}
                   onChange={handleChange}
-                  placeholder="Apt 4B, Suite 123, etc."
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
 
@@ -321,7 +320,7 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                 <div>
                   <label
                     htmlFor="city"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
                     City
                   </label>
@@ -333,14 +332,14 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                     value={formData.city}
                     onChange={handleChange}
                     className={cn(
-                      "mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500",
+                      "mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
                       validationErrors.city
-                        ? "border-red-300"
-                        : "border-gray-300",
+                        ? "border-red-300 dark:border-red-500 text-red-900 dark:text-red-100 placeholder-red-300 dark:placeholder-red-500"
+                        : "border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
                     )}
                   />
                   {validationErrors.city && (
-                    <p className="mt-1 text-sm text-red-600">
+                    <p className="mt-2 text-sm text-red-600 dark:text-red-400">
                       {validationErrors.city}
                     </p>
                   )}
@@ -350,13 +349,9 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                 <div>
                   <label
                     htmlFor="state"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {formData.country === "United Kingdom"
-                      ? "County"
-                      : formData.country === "United States"
-                        ? "State"
-                        : "Province/Region"}
+                    State/Province
                   </label>
                   <select
                     name="state"
@@ -364,12 +359,7 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                     required
                     value={formData.state}
                     onChange={handleChange}
-                    className={cn(
-                      "mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500",
-                      validationErrors.state
-                        ? "border-red-300"
-                        : "border-gray-300",
-                    )}
+                    className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     {getStatesByCountry(
                       COUNTRIES.find((c) => c.name === formData.country)?.code,
@@ -379,11 +369,6 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                       </option>
                     ))}
                   </select>
-                  {validationErrors.state && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {validationErrors.state}
-                    </p>
-                  )}
                 </div>
               </div>
 
@@ -391,11 +376,9 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
               <div>
                 <label
                   htmlFor="zipCode"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {getPostalCodeLabel(
-                    COUNTRIES.find((c) => c.name === formData.country)?.code,
-                  )}
+                  {getPostalCodeLabel(formData.country)}
                 </label>
                 <input
                   type="text"
@@ -404,18 +387,16 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                   required
                   value={formData.zipCode}
                   onChange={handleChange}
-                  placeholder={getPostalCodePlaceholder(
-                    COUNTRIES.find((c) => c.name === formData.country)?.code,
-                  )}
+                  placeholder={getPostalCodePlaceholder(formData.country)}
                   className={cn(
-                    "mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500",
+                    "mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
                     validationErrors.zipCode
-                      ? "border-red-300"
-                      : "border-gray-300",
+                      ? "border-red-300 dark:border-red-500 text-red-900 dark:text-red-100 placeholder-red-300 dark:placeholder-red-500"
+                      : "border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
                   )}
                 />
                 {validationErrors.zipCode && (
-                  <p className="mt-1 text-sm text-red-600">
+                  <p className="mt-2 text-sm text-red-600 dark:text-red-400">
                     {validationErrors.zipCode}
                   </p>
                 )}
@@ -425,18 +406,17 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
               <div>
                 <label
                   htmlFor="additionalInfo"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  Delivery Instructions (optional)
+                  Additional Information (optional)
                 </label>
                 <textarea
                   name="additionalInfo"
                   id="additionalInfo"
-                  rows="2"
+                  rows={3}
                   value={formData.additionalInfo}
                   onChange={handleChange}
-                  placeholder="Delivery instructions, gate codes, etc."
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
 
@@ -448,11 +428,11 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                   id="isDefault"
                   checked={formData.isDefault}
                   onChange={handleChange}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                 />
                 <label
                   htmlFor="isDefault"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
                 >
                   Set as default shipping address
                 </label>
@@ -467,18 +447,22 @@ const AddressManager = ({ addresses, onAddressUpdate }) => {
                     setEditingId(null);
                     resetForm();
                   }}
-                  className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
+                  className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
                     isSubmitting ? "opacity-50 cursor-not-allowed" : ""
                   }`}
                 >
-                  {isSubmitting ? "Saving..." : "Save Address"}
+                  {isSubmitting
+                    ? "Saving..."
+                    : editingId
+                    ? "Save Changes"
+                    : "Add Address"}
                 </button>
               </div>
             </form>
