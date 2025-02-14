@@ -63,8 +63,11 @@ app.use(
       }
     },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
     credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    exposedHeaders: ["Content-Length", "Content-Type"],
   }),
 );
 app.use(express.json());
@@ -448,22 +451,21 @@ app.get("/api/validate/postal-code/:postalCode", async (req, res) => {
   }
 });
 
-// Newsletter Signup Route
-app.post("/api/newsletter/subscribe", publicRoutesLimiter, async (req, res) => {
+// Newsletter Subscription Route
+app.post("/api/newsletter/subscribe", async (req, res) => {
   try {
     const { email } = req.body;
 
-    // Validate email
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return res.status(400).json({ message: "Invalid email address" });
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
     }
 
     // Check if already subscribed
-    const existing = await NewsletterSubscriber.findOne({
+    const existingSubscriber = await NewsletterSubscriber.findOne({
       email: { $eq: email },
     });
-    if (existing) {
-      return res.status(400).json({ message: "Email already subscribed" });
+    if (existingSubscriber) {
+      return res.status(400).json({ message: "Email is already subscribed" });
     }
 
     // Create new subscriber
