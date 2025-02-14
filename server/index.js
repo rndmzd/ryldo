@@ -73,10 +73,67 @@ app.use(
 app.use(express.json());
 
 // MongoDB Connection
+console.log("Attempting to connect to MongoDB...");
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 30000, // Increase timeout to 30s for initial connection
+    socketTimeoutMS: 45000,
+    family: 4,
+  })
+  .then(() => {
+    console.log("Successfully connected to MongoDB");
+    console.log("Database name:", mongoose.connection.name);
+    console.log("MongoDB version:", mongoose.version);
+    console.log("Connection state:", mongoose.connection.readyState);
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error details:");
+    console.error("Error name:", err.name);
+    console.error("Error message:", err.message);
+    console.error("Full error:", err);
+  });
+
+// Handle MongoDB connection events
+mongoose.connection.on("error", (err) => {
+  console.error("MongoDB connection error event:", err);
+  console.error("Current connection state:", mongoose.connection.readyState);
+  console.error("Error details:", {
+    name: err.name,
+    message: err.message,
+    code: err.code,
+  });
+});
+
+mongoose.connection.on("disconnected", () => {
+  console.log(
+    "MongoDB disconnected. Current state:",
+    mongoose.connection.readyState,
+  );
+  console.log("Attempting to reconnect...");
+});
+
+mongoose.connection.on("reconnected", () => {
+  console.log(
+    "MongoDB reconnected. Current state:",
+    mongoose.connection.readyState,
+  );
+});
+
+// Add connection state monitoring
+setInterval(() => {
+  console.log(
+    "Current MongoDB connection state:",
+    mongoose.connection.readyState,
+  );
+  if (mongoose.connection.readyState !== 1) {
+    console.log("MongoDB not connected. Attempting to reconnect...");
+    mongoose.connect(process.env.MONGODB_URI).catch((err) => {
+      console.error("Reconnection attempt failed:", err.message);
+    });
+  }
+}, 10000);
 
 // Authentication Routes
 app.post("/api/auth/register", async (req, res) => {
