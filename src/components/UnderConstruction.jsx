@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "./ui/card";
 import AgeVerification from "./AgeVerification";
-
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000"; // Make sure this matches your server port
+import { subscribeToNewsletter } from "../services/api";
 
 const UnderConstruction = () => {
   const [email, setEmail] = useState("");
@@ -14,29 +13,14 @@ const UnderConstruction = () => {
     setStatus("loading");
 
     try {
-      const response = await fetch(`${API_URL}/api/newsletter/subscribe`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to subscribe");
-      }
-
+      const response = await subscribeToNewsletter(email);
       setStatus("success");
-      setMessage(data.message);
+      setMessage(response.message);
       setEmail("");
     } catch (error) {
       console.error("Newsletter subscription error:", error);
       setStatus("error");
-      setMessage(
-        error.message || "Failed to subscribe. Please try again later.",
-      );
+      setMessage(error.message || "Failed to subscribe. Please try again later.");
     }
   };
 
